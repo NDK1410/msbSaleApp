@@ -8,12 +8,12 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        body: Container(
-          color: Colors.white,
-          padding: EdgeInsets.fromLTRB(30, 0, 30, 30),
-          constraints: BoxConstraints.expand(),
+    return Scaffold(
+      body: Container(
+        color: Colors.white,
+        padding: EdgeInsets.fromLTRB(30, 40, 30, 30),
+        constraints: BoxConstraints.expand(),
+        child: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.end,
             crossAxisAlignment: CrossAxisAlignment.start,
