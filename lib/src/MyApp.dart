@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:msbSaleApp/src/pages/LoginPage.dart';
+import 'package:msbSaleApp/src/pages/HomePage.dart';
 
 class MyApp extends StatelessWidget {
   @override
@@ -11,7 +11,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: LoginPage(),
+      home: HomePage(),
     );
   }
 }
