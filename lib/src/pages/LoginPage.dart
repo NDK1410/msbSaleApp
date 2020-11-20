@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:msbSaleApp/src/blocs/login_bloc/login_bloc.dart';
 import 'package:msbSaleApp/src/pages/HomePage.dart';
 
 class LoginPage extends StatefulWidget {
@@ -7,13 +8,14 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  LoginBloc bloc = new LoginBloc();
   bool _showPass = false;
   TextEditingController _userController = new TextEditingController();
   TextEditingController _passController = new TextEditingController();
-  var _userNameError = "Username Invalid";
-  var _passWordError = "Password must be more than 6 characters";
-  bool _userNameInvalid = false;
-  bool _passWordInvalid = false;
+  // var _userNameError = "Username Invalid";
+  // var _passWordError = "Password must be more than 6 characters";
+  // bool _userNameInvalid = false;
+  // bool _passWordInvalid = false;
 
   @override
   Widget build(BuildContext context) {
@@ -53,15 +55,18 @@ class _LoginPageState extends State<LoginPage> {
               ),
               Padding(
                 padding: const EdgeInsets.fromLTRB(0, 0, 0, 30),
-                child: TextField(
-                  controller: _userController,
-                  style: TextStyle(fontSize: 18, color: Colors.black87),
-                  decoration: InputDecoration(
-                    labelText: "Username",
-                    errorText: _userNameInvalid ? _userNameError : null,
-                    labelStyle: TextStyle(
-                      fontSize: 20,
-                      color: Color(0xff888888),
+                child: StreamBuilder(
+                  stream: bloc.userStream,
+                  builder: (context, snapshot) => TextField(
+                    controller: _userController,
+                    style: TextStyle(fontSize: 18, color: Colors.black87),
+                    decoration: InputDecoration(
+                      labelText: "Username",
+                      errorText: snapshot.hasError ? snapshot.error : null,
+                      labelStyle: TextStyle(
+                        fontSize: 20,
+                        color: Color(0xff888888),
+                      ),
                     ),
                   ),
                 ),
@@ -71,16 +76,19 @@ class _LoginPageState extends State<LoginPage> {
                 child: Stack(
                   alignment: AlignmentDirectional.centerEnd,
                   children: <Widget>[
-                    TextField(
-                      controller: _passController,
-                      style: TextStyle(fontSize: 18, color: Colors.black87),
-                      obscureText: !_showPass,
-                      decoration: InputDecoration(
-                        labelText: "Password",
-                        errorText: _passWordInvalid ? _passWordError : null,
-                        labelStyle: TextStyle(
-                          fontSize: 20,
-                          color: Color(0xff888888),
+                    StreamBuilder(
+                      stream: bloc.passStream,
+                      builder: (context, snapshot) => TextField(
+                        controller: _passController,
+                        style: TextStyle(fontSize: 18, color: Colors.black87),
+                        obscureText: !_showPass,
+                        decoration: InputDecoration(
+                          labelText: "Password",
+                          errorText: snapshot.hasError ? snapshot.error : null,
+                          labelStyle: TextStyle(
+                            fontSize: 20,
+                            color: Color(0xff888888),
+                          ),
                         ),
                       ),
                     ),
@@ -131,26 +139,30 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void onSignInClicked() {
-    setState(() {
-      if (_userController.text.length < 6 ||
-          !_userController.text.contains("@")) {
-        _userNameInvalid = true;
-      } else {
-        _userNameInvalid = false;
-      }
+    // setState(() {
+    //   if (_userController.text.length < 6 ||
+    //       !_userController.text.contains("@")) {
+    //     _userNameInvalid = true;
+    //   } else {
+    //     _userNameInvalid = false;
+    //   }
 
-      if (_passController.text.length < 6) {
-        _passWordInvalid = true;
-      } else {
-        _passWordInvalid = false;
-      }
+    //   if (_passController.text.length < 6) {
+    //     _passWordInvalid = true;
+    //   } else {
+    //     _passWordInvalid = false;
+    //   }
 
-      if (!_userNameInvalid && !_passWordInvalid) {
-        // Navigator.push(context, MaterialPageRoute(builder: redirectToHomePage));
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => HomePage()));
-      }
-    });
+    //   if (!_userNameInvalid && !_passWordInvalid) {
+    //     // Navigator.push(context, MaterialPageRoute(builder: redirectToHomePage));
+    //     Navigator.push(
+    //         context, MaterialPageRoute(builder: (context) => HomePage()));
+    //   }
+    // });
+    if (bloc.isValidInput(_userController.text, _passController.text)) {
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => HomePage()));
+    }
   }
 
   void onToggleShowPass() {
