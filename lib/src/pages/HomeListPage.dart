@@ -5,15 +5,6 @@ import 'package:msbSaleApp/src/blocs/get_user_bloc.dart';
 import 'package:msbSaleApp/src/blocs/get_user_state.dart';
 import 'package:msbSaleApp/src/blocs/user_event.dart';
 
-// class HomeListPage extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container(
-//       color: Colors.pinkAccent,
-//     );
-//   }
-// }
-
 class HomeListPage extends StatefulWidget {
   @override
   _HomeListPageState createState() => _HomeListPageState();
@@ -34,10 +25,6 @@ class _HomeListPageState extends State<HomeListPage> {
     return BlocProvider(
       builder: (context) => _getUsersBloc,
       child: Scaffold(
-        appBar: AppBar(
-          title: Text("Demo BLoC"),
-          centerTitle: true,
-        ),
         body: BlocBuilder(
           bloc: _getUsersBloc,
           builder: (context, GetUsersState state) {
@@ -58,26 +45,28 @@ class _HomeListPageState extends State<HomeListPage> {
 
   Widget _buildListUser(List<User> users) {
     return ListView.separated(
-        itemBuilder: (context, index) {
-          return ListTile(
-            leading: CircleAvatar(
-              backgroundImage: NetworkImage(users[index].avatar),
-            ),
-            title: Text(
-              users[index].name,
-              style: TextStyle(color: Colors.black, fontSize: 16),
-            ),
-            subtitle: Text(
-              users[index].address,
-              style: TextStyle(color: Colors.grey, fontSize: 14),
-            ),
-          );
-        },
-        separatorBuilder: (context, index) {
-          return Divider(
-            height: 1,
-          );
-        },
-        itemCount: users.length);
+      itemBuilder: (context, index) {
+        return ListTile(
+          leading: CircleAvatar(
+            backgroundImage: NetworkImage(users[index].avatar),
+            radius: 30.0,
+          ),
+          title: Text(
+            users[index].name,
+            style: TextStyle(color: Colors.black, fontSize: 16),
+          ),
+          subtitle: Text(
+            users[index].address,
+            style: TextStyle(color: Colors.grey, fontSize: 14),
+          ),
+        );
+      },
+      separatorBuilder: (context, index) {
+        return Divider(
+          height: 1,
+        );
+      },
+      itemCount: users.length,
+    );
   }
 }
