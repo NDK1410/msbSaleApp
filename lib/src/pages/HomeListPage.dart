@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:msbSaleApp/src/models/user.dart';
-import 'package:msbSaleApp/src/blocs/get_user_bloc.dart';
-import 'package:msbSaleApp/src/blocs/get_user_state.dart';
-import 'package:msbSaleApp/src/blocs/user_event.dart';
+import 'package:msbSaleApp/src/blocs/user_bloc/get_user_bloc.dart';
+import 'package:msbSaleApp/src/blocs/user_bloc/get_user_state.dart';
+import 'package:msbSaleApp/src/blocs/user_bloc/user_event.dart';
 
 class HomeListPage extends StatefulWidget {
   @override
